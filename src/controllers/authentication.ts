@@ -6,16 +6,15 @@ import { authentication, random } from '../helpers/index';
 export const register = async (req: express.Request, res: express.Response) => {
 	try {
 		const { email, password, username } = req.body;
-		console.log(req.body);
 
 		if (!email || !password || !username) {
-			return res.sendStatus(505);
+			return res.sendStatus(400);
 		}
 
 		const existingUser = await getUserByEmail(email)
 
 		if (existingUser) {
-			return res.sendStatus(504);
+			return res.sendStatus(400);
 		}
 
 		const salt = random();
@@ -31,6 +30,6 @@ export const register = async (req: express.Request, res: express.Response) => {
 		return res.status(200).json(user).end();
 	} catch (error) {
 		console.error(error);
-		return res.sendStatus(444);
+		return res.sendStatus(400);
 	}
 }
