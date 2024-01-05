@@ -29,3 +29,5 @@ const MONGO_URL = process.env.MONGO_URL || null;
 mongoose.Promise = Promise;
 mongoose.connect(MONGO_URL);
 mongoose.connection.on('error', (error: Error) => console.error(error));
+
+export default app;
