@@ -11,13 +11,13 @@ const app = express();
 
 app.use(cors({
 	credentials: true
-}))
+}));
 
 app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
 
-app.use('/', router);
+app.use('/', router());
 
 const server = http.createServer(app);
 
