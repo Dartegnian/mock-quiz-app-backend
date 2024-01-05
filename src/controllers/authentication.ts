@@ -27,7 +27,7 @@ export const login = async (req: express.Request, res: express.Response) => {
 		user.authentication.sessionToken = authentication(salt, user._id.toString());
 
 		await user.save();
-		res.cookie("QUIZ-AUTH", user.authentication.sessionToken, { domain: 'localhost' });
+		res.cookie("QUIZ-AUTH", user.authentication.sessionToken, { domain: process.env.domain });
 		
 		return res.status(200).json(user).end();
 	} catch (error) {
