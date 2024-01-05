@@ -25,7 +25,7 @@ server.listen(8080, () => {
 	console.log("Quiz BE on port 8080");
 });
 
-const MONGO_URL = "mongodb+srv://XXXXXXXXXXXXXXXXXXX:XXXXXXXXXXXXXXXXXXX@mockquizcluster.xhvsuyr.mongodb.net/?retryWrites=true&w=majority"
+const MONGO_URL = process.env.MONGO_URL || null;
 mongoose.Promise = Promise;
 mongoose.connect(MONGO_URL);
 mongoose.connection.on('error', (error: Error) => console.error(error));
