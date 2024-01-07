@@ -5,19 +5,25 @@ import { getUserBySessionToken } from '../db/users';
 
 export const isAuthenticated = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 	try {
-		const sessionToken = req.cookies['QUIZ-AUTH'];
+		const authorizationHeader = req.headers['authorization'];
 
-		if (!sessionToken) {
+		if (!authorizationHeader) {
 			return res.sendStatus(403);
 		}
 
-		const existingUser = await getUserBySessionToken(sessionToken);
+		if (!authorizationHeader.startsWith('Bearer ')) {
+			return res.sendStatus(403);
+		}
+
+		const token = authorizationHeader.substring(7);
+
+		const existingUser = await getUserBySessionToken(token);
 
 		if (!existingUser) {
 			return res.sendStatus(403);
 		}
 
-		merge(req, { identity: existingUser })
+		merge(req, { identity: existingUser });
 
 		return next();
 	} catch (error) {
